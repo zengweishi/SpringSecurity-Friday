@@ -23,4 +23,6 @@ public interface PermissionService {
     Results delete(Integer id);
 
     List<SysPermission> getMenu();
+
+    Results<SysPermission> getMenu(Long userId);
 }

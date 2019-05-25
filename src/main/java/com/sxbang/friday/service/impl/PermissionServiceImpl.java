@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -72,4 +73,12 @@ public class PermissionServiceImpl implements PermissionService {
         return permissionDao.findAll();
     }
 
+    public Results getMenu(Long userId) {
+        List<SysPermission> datas = permissionDao.listByUserId(userId);
+        datas = datas.stream().filter(p -> p.getType().equals(1)).collect(Collectors.toList());
+        JSONArray array = new JSONArray();
+        log.info(getClass().getName() + ".setPermissionsTree(?,?,?)");
+        TreeUtils.setPermissionsTree(0, datas, array);
+        return Results.success(array);
+    }
 }

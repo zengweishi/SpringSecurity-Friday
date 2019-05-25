@@ -101,4 +101,12 @@ public class PermissionController {
             });
         }
     }
+
+
+    @RequestMapping(value = "/menu", method = RequestMethod.GET)
+    @ResponseBody
+    public Results<SysPermission> getMenu(Long userId) {
+        return permissionService.getMenu(userId);
+    }
+
 }
