@@ -1,0 +1,37 @@
+spring:
+  profiles:
+    active: dev
+
+  devtools:
+    restart:
+      #需要实时更新的目录
+      additional-paths: resources/**,static/**,templates/**
+
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://47.107.127.223:12345/sxb-base?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+    username: root
+    password: my-secret-pw
+    platform: mysql
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 1
+    minIdle: 3
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 30000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+
+mybatis:
+  type-aliases-package: com.sxbang.friday.model
+  mapper-locations: classpath:/mybatis-mappers/*
+  configuration:
+    mapUnderscoreToCamelCase: true
+
+#baseInfo
+api-url: /api
