@@ -81,4 +81,5 @@ public class PermissionServiceImpl implements PermissionService {
         TreeUtils.setPermissionsTree(0, datas, array);
         return Results.success(array);
     }
+
 }

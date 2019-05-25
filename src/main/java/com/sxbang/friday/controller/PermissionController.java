@@ -72,36 +72,6 @@ public class PermissionController {
         return permissionService.delete(sysPermission.getId());
     }
 
-    @GetMapping("/current")
-    @ResponseBody
-    public List<SysPermission> permissionsCurrent() {
-        //LoginUser loginUser = UserUtil.getLoginUser();
-        //List<SysPermission> list = loginUser.getPermissions();
-        List<SysPermission> list = permissionService.getMenu();
-        final List<SysPermission> permissions = list.stream().filter(l -> l.getType().equals(1)) .collect(Collectors.toList());
-        List<SysPermission> firstLevel = permissions.stream().filter(p -> p.getParentId().equals(0)).collect(Collectors.toList());
-        firstLevel.parallelStream().forEach(p -> { setChild(p, permissions);});
-
-        return firstLevel;
-    }
-    /**
-     * 设置子元素
-     * 2018.06.09
-     *
-     * @param sysPermission
-     * @param permissions
-     */
-    private void setChild(SysPermission sysPermission, List<SysPermission> permissions) {
-        List<SysPermission> child = permissions.parallelStream().filter(a -> a.getParentId().equals(sysPermission.getId())).collect(Collectors.toList());
-        sysPermission.setChild(child);
-        if (!CollectionUtils.isEmpty(child)) {
-            child.parallelStream().forEach(c -> {
-                //递归设置子元素，多级菜单支持
-                setChild(c, permissions);
-            });
-        }
-    }
-
 
     @RequestMapping(value = "/menu", method = RequestMethod.GET)
     @ResponseBody
