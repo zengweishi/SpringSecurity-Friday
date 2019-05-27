@@ -10,6 +10,7 @@ import com.sxbang.friday.util.MD5;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -36,6 +37,7 @@ public class UserController {
 
 	@GetMapping("/list")
 	@ResponseBody
+	@PreAuthorize("hasAuthority('sys:user:query')")
 	public Results<SysUser> getUsers(PageTableRequest request) {
 		request.countOffset();
 		return userService.getAllUsersByPage(request.getOffset(),request.getLimit());

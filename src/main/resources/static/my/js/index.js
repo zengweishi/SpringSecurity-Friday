@@ -6,23 +6,24 @@ function initMenu(){
 	     async:false,
 	     success:function(data){
 	    	 if(!$.isArray(data)){
-	    		 location.href='/login.html';
-	    		 return;
-	    	 }
+                 location.href='/login.html';
+                 return;
+             }
 	    	 var menu = $("#menu");
 	    	 $.each(data, function(i,item){
 	             var a = $("<a href='javascript:;'></a>");
 	             
 	             var css = item.css;
 	             if(css!=null && css!=""){
-	            	 a.append("<i aria-hidden='true' class='fa " + css +"'></i>");
+	            	 a.append("<i aria-hidden='true' class='iconfont left-nav-li " + css +"' ></i>");
 	             }
 	             a.append("<cite>"+item.name+"</cite>");
 	             a.attr("lay-id", item.id);
-	             
+
 	             var href = item.href;
 	             if(href != null && href != ""){
-	                a.attr("data-url", href);
+	                 a.attr("data-url", "xadmin.add_tab(" + item.name + "," + href +  ",true)");
+	                 a.attr("data-url", href);
 	             }
 	             
 	             var li = $("<li class='layui-nav-item'></li>");
@@ -30,6 +31,7 @@ function initMenu(){
 	            	 li.addClass("layui-nav-itemed");
 	             }
 	             li.append(a);
+	             console.info(a)
                  menu.append(li);
 	             //多级菜单
 	             setChild(li, item.child)
