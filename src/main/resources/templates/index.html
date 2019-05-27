@@ -100,7 +100,8 @@
                     this.menuItemRight = '<i class="iconfont nav_right">&#xe697;</i>';
                     this.menuItemTemplate = ""
                         +'<li>'
-                        + '	<a {{menu_level}}href="{{menu_href}}">'
+                        //+ '	<a {{menu_level}}href="{{menu_href}}">'
+                        + '<a onclick="xadmin.add_tab(\'{{menu_title}} \',\' {{menu_href}} \')">'
                         + '		<i class="iconfont">{{men_icon}}</i>'
                         + '		<cite>{{menu_name}}</cite>'
                         + '		{{menu_right}}'
@@ -185,14 +186,14 @@
                                 if (childList) {
                                     child = _this.subMenu;
                                     child = child.replace(/{{sub_menu_list}}/, childList);
-                                    menuItemStr = menuItemStr.replace(/{{menu_level}}/, "");
+                                    menuItemStr = menuItemStr.replace(/{{menu_title}}/, "");
                                     menuItemStr = menuItemStr.replace(/{{menu_href}}/, "javascript:;");
                                 } else {
-                                    menuItemStr = menuItemStr.replace(/{{menu_level}}/, "_");
+                                    menuItemStr = menuItemStr.replace(/{{menu_title}}/,item.name);
                                     menuItemStr = menuItemStr.replace(/{{menu_href}}/, item.href);
                                 }
                             } else {
-                                menuItemStr = menuItemStr.replace(/{{menu_level}}/, "_");
+                                menuItemStr = menuItemStr.replace(/{{menu_title}}/, item.name);
                                 menuItemStr = menuItemStr.replace(/{{menu_href}}/, item.href);
                             }
                             menuItemStr = menuItemStr.replace(/{{sub_menu}}/, child);
