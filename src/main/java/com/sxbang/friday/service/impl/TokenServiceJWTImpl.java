@@ -39,8 +39,8 @@ public class TokenServiceJWTImpl implements TokenService {
 	 */
 	@Value("${token.expire.seconds}")
 	private Integer expireSeconds;
-	@Autowired
-	private RedisTemplate<String, LoginUser> redisTemplate;
+//	@Autowired
+//	private RedisTemplate<String, LoginUser> redisTemplate;
 
 
 	/**
@@ -54,10 +54,9 @@ public class TokenServiceJWTImpl implements TokenService {
 
 	@Override
 	public Token saveToken(LoginUser loginUser) {
-		loginUser.setToken(UUID.randomUUID().toString());
-		cacheLoginUser(loginUser);
+		//loginUser.setToken(UUID.randomUUID().toString());
+		//cacheLoginUser(loginUser);
 		String jwtToken = createJWTToken(loginUser);
-
 		return new Token(jwtToken, loginUser.getLoginTime());
 	}
 
@@ -77,45 +76,45 @@ public class TokenServiceJWTImpl implements TokenService {
 		return jwtToken;
 	}
 
-	private void cacheLoginUser(LoginUser loginUser) {
-		loginUser.setLoginTime(System.currentTimeMillis());
-		loginUser.setExpireTime(loginUser.getLoginTime() + expireSeconds * 1000);
-		// 根据uuid将loginUser缓存
-		//redisTemplate.boundValueOps(getTokenKey(loginUser.getToken())).set(loginUser, expireSeconds, TimeUnit.SECONDS);
-	}
-
-	/**
-	 * 更新缓存的用户信息
-	 */
-	@Override
-	public void refresh(LoginUser loginUser) {
-		cacheLoginUser(loginUser);
-	}
-
-	@Override
-	public LoginUser getLoginUser(String jwtToken) {
-		String uuid = getUUIDFromJWT(jwtToken);
-		if (uuid != null) {
-			return redisTemplate.boundValueOps(getTokenKey(uuid)).get();
-		}
-
-		return null;
-	}
-
-	@Override
-	public boolean deleteToken(String jwtToken) {
-		String uuid = getUUIDFromJWT(jwtToken);
-		if (uuid != null) {
-			String key = getTokenKey(uuid);
-			LoginUser loginUser = redisTemplate.opsForValue().get(key);
-			if (loginUser != null) {
-				redisTemplate.delete(key);
-				return true;
-			}
-		}
-
-		return false;
-	}
+//	private void cacheLoginUser(LoginUser loginUser) {
+//		loginUser.setLoginTime(System.currentTimeMillis());
+//		loginUser.setExpireTime(loginUser.getLoginTime() + expireSeconds * 1000);
+//		// 根据uuid将loginUser缓存
+//		//redisTemplate.boundValueOps(getTokenKey(loginUser.getToken())).set(loginUser, expireSeconds, TimeUnit.SECONDS);
+//	}
+//
+//	/**
+//	 * 更新缓存的用户信息
+//	 */
+//	@Override
+//	public void refresh(LoginUser loginUser) {
+//		cacheLoginUser(loginUser);
+//	}
+//
+//	@Override
+//	public LoginUser getLoginUser(String jwtToken) {
+//		String uuid = getUUIDFromJWT(jwtToken);
+//		if (uuid != null) {
+//			return redisTemplate.boundValueOps(getTokenKey(uuid)).get();
+//		}
+//
+//		return null;
+//	}
+//
+//	@Override
+//	public boolean deleteToken(String jwtToken) {
+//		String uuid = getUUIDFromJWT(jwtToken);
+//		if (uuid != null) {
+//			String key = getTokenKey(uuid);
+//			LoginUser loginUser = redisTemplate.opsForValue().get(key);
+//			if (loginUser != null) {
+//				redisTemplate.delete(key);
+//				return true;
+//			}
+//		}
+//
+//		return false;
+//	}
 
 	private String getTokenKey(String uuid) {
 		return "tokens:" + uuid;

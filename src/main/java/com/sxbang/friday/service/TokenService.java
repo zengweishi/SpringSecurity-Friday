@@ -15,10 +15,10 @@ public interface TokenService {
 
 	Token saveToken(LoginUser loginUser);
 
-	void refresh(LoginUser loginUser);
-
-	LoginUser getLoginUser(String token);
-
-	boolean deleteToken(String token);
+//	void refresh(LoginUser loginUser);
+//
+//	LoginUser getLoginUser(String token);
+//
+//	boolean deleteToken(String token);
 
 }

@@ -65,13 +65,13 @@ public class SecurityHandlerConfig {
 			@Override
 			public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                                 AuthenticationException exception) throws IOException, ServletException {
-				String msg = null;
+				String message = null;
 				if (exception instanceof BadCredentialsException) {
-					msg = "密码错误";
+					message = "密码错误";
 				} else {
-					msg = exception.getMessage();
+					message = exception.getMessage();
 				}
-//                ResponseCode info = new ResponseCode(ResponseCode.UNAUTHORIZED , msg);
+//                ResponseCode info = new ResponseCode(ResponseCode.UNAUTHORIZED , message);
 				ResponseUtil.responseJson(response, HttpStatus.UNAUTHORIZED.value(), ResponseCode.UNAUTHORIZED );
 			}
 		};
@@ -109,9 +109,8 @@ public class SecurityHandlerConfig {
 			public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
 //				ResponseInfo info = new ResponseInfo(HttpStatus.OK.value() + "", "退出成功");
-				String token = TokenFilter.getToken(request);
-				tokenService.deleteToken(token);
-
+//				String token = TokenFilter.getToken(request);
+//				tokenService.deleteToken(token);
 				ResponseUtil.responseJson(response, HttpStatus.OK.value(), ResponseCode.SUCCESS);
 			}
 		};
