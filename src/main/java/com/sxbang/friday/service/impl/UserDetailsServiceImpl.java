@@ -15,12 +15,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 /**
  * spring security登陆处理<br>
  */
+
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 

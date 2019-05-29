@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sxbang.friday.model.SysPermission;
 import com.sxbang.friday.model.SysUser;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +13,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
 public class LoginUser extends SysUser implements UserDetails {
 
 	private static final long serialVersionUID = -1379274258881257107L;
@@ -25,6 +23,7 @@ public class LoginUser extends SysUser implements UserDetails {
 	private Long loginTime;
 	/** 过期时间戳 */
 	private Long expireTime;
+
 
 	@Override
 	@JsonIgnore
@@ -63,6 +62,22 @@ public class LoginUser extends SysUser implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	public Long getLoginTime() {
+		return loginTime;
+	}
+
+	public void setLoginTime(Long loginTime) {
+		this.loginTime = loginTime;
+	}
+
+	public Long getExpireTime() {
+		return expireTime;
+	}
+
+	public void setExpireTime(Long expireTime) {
+		this.expireTime = expireTime;
 	}
 
 }

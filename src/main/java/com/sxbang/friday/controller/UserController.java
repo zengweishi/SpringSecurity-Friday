@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+//import org.springframework.security.access.prepost.PreAuthorize;
 
 @Controller
 @RequestMapping("user")
@@ -44,6 +45,7 @@ public class UserController {
 	}
 
 	@GetMapping(value = "/add")
+    @PreAuthorize("hasAuthority('sys:user:add')")
 	public String addUser(Model model) {
 		model.addAttribute("sysUser",new SysUser());
 		return "user/user-add";
@@ -51,6 +53,7 @@ public class UserController {
 
 	@PostMapping(value = "/add")
 	@ResponseBody
+    @PreAuthorize("hasAuthority('sys:user:add')")
 	public Results<SysUser> saveUser(UserDto userDto, Integer roleId) {
 		SysUser sysUser = null;
 		sysUser = userService.getUser(userDto.getUsername());
@@ -67,7 +70,8 @@ public class UserController {
 		}
 
 		userDto.setStatus(1);
-		userDto.setPassword(MD5.crypt(userDto.getPassword()));
+		userDto.setPassword(new BCryptPasswordEncoder().encode(userDto.getPassword()));
+		//userDto.setPassword(MD5.crypt(userDto.getPassword()));
 		return userService.save(userDto,roleId);
 	}
 
@@ -113,6 +117,7 @@ public class UserController {
 
     @GetMapping("/findUserByFuzzyUserName")
 	@ResponseBody
+    @PreAuthorize("hasAuthority('sys:user:query')")
 	public Results<SysUser> getUserByFuzzyUserName(PageTableRequest requests, String username) {
 		requests.countOffset();
 		return userService.getUserByFuzzyUserNamePage(username,requests.getOffset(),requests.getLimit());
