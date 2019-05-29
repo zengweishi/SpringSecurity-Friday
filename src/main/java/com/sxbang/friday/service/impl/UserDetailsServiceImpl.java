@@ -20,8 +20,6 @@ import java.util.List;
 
 /**
  * spring security登陆处理<br>
- * <p>
- * 密码校验请看文档（02 框架及配置），第三章第4节
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
