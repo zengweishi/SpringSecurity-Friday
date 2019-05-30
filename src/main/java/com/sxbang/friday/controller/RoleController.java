@@ -8,6 +8,7 @@ import com.sxbang.friday.service.RoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -32,6 +33,7 @@ public class RoleController {
 
 	@GetMapping("/list")
 	@ResponseBody
+    @PreAuthorize("hasAuthority('sys:role:query')")
 	public Results list(PageTableRequest request) {
 		log.info("RoleController.list(): param ( request = " + request +" )");
 		request.countOffset();
@@ -46,6 +48,7 @@ public class RoleController {
 
     @PostMapping(value = "/add")
     @ResponseBody
+    @PreAuthorize("hasAuthority('sys:role:add')")
     public Results saveRole(@RequestBody RoleDto roleDto) {
         return roleService.save(roleDto);
     }
@@ -58,12 +61,14 @@ public class RoleController {
 
     @PostMapping(value = "/edit")
     @ResponseBody
+    @PreAuthorize("hasAuthority('sys:role:edit')")
     public Results updateRole(@RequestBody RoleDto roleDto) {
         return roleService.update(roleDto);
     }
 
     @GetMapping(value = "/delete")
     @ResponseBody
+    @PreAuthorize("hasAuthority('sys:role:del')")
     public Results<SysRole> deleteRole(RoleDto roleDto) {
         return roleService.delete(roleDto.getId());
     }
@@ -77,6 +82,7 @@ public class RoleController {
 
     @GetMapping("/findRoleByFuzzyRoleName")
     @ResponseBody
+    @PreAuthorize("hasAuthority('sys:role:query')")
     public Results findRoleByFuzzyRoleName(PageTableRequest requests, String roleName) {
         requests.countOffset();
         return roleService.getRoleByFuzzyRoleNamePage(roleName,requests.getOffset(),requests.getLimit());

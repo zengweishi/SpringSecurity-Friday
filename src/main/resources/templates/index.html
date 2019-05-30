@@ -35,7 +35,7 @@
             </ul>
             <ul class="layui-nav right" lay-filter="">
                 <li class="layui-nav-item">
-                    <a href="javascript:;">admin</a>
+                    <a href="javascript:;" id="show-nickName">admin</a>
                     <dl class="layui-nav-child">
                         <!-- 二级菜单 -->
                         <dd>
@@ -93,6 +93,10 @@
 
         <script>
             $(document).ready(function () {
+                //显示用户名
+                var nickName = localStorage.nickName;
+                $("#show-nickName").text((nickName != null && nickName != undefined) ? nickName : "---");
+
                 function Menu(eleId, userId) {
                     this.eleId = eleId || "nav";
                     this.userId = userId || "0";
@@ -131,7 +135,7 @@
                                     url: '/permission/menu',
                                     type: 'GET',
                                     // dataType: 'jsonp',
-                                    data: {'userId': 1}
+                                    data: {'userId': userId}
                                 }).always(function (res) {//complete()
                                 }).done(function (res) {//Success()
                                     if (res.code != '200') {
@@ -297,7 +301,8 @@
 
                 }
                 //var userId = JSON.parse(localStorage.user).id;
-                var menu = new Menu("",1 );
+                var userId = localStorage.userId;
+                var menu = new Menu("",userId );
                 menu.init();
             })
             ;

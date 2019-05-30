@@ -91,6 +91,7 @@ public class UserController {
 
     @PostMapping(value = "/edit")
     @ResponseBody
+	@PreAuthorize("hasAuthority('sys:user:edit')")
     public Results<SysUser> updateUser( UserDto userDto,Integer roleId) {
         SysUser sysUser = null;
         sysUser = userService.getUser(userDto.getUsername());
@@ -110,6 +111,7 @@ public class UserController {
 
     @GetMapping(value = "/delete")
     @ResponseBody
+	@PreAuthorize("hasAuthority('sys:user:del')")
     public Results<SysUser> deleteUser( UserDto userDto) {
         userService.deleteUser(userDto.getId());
         return Results.success();
