@@ -21,7 +21,7 @@
 			<hr class="hr15">
 			<input id="password" name="password" placeholder="密码" type="password" autocomplete="off">
 			<hr class="hr15">
-            <button style="width: 100%;" lay-submit lay-filter="login" type="submit" >登录</button>
+            <input style="width: 100%;" lay-submit lay-filter="login" type="submit" value="登录">
 			<!--<button style="width: 100%;" type="submit" onclick="login(this)">登录</button>-->
 			<hr class="hr20">
 			<span id="info" style="color: red"></span>
@@ -68,9 +68,11 @@
                     				var response = JSON.parse(msg);
                     				if(response.message === "Bad credentials"){
                                         layer.msg("账户或密码错误");
+									}else if(response.message === "用户名不存在"){
+                                        layer.msg("账户或密码错误");
 									}
                     				//$("#info").html(response.message);
-                    				$(obj).attr("disabled", false);
+                    				//$(obj).attr("disabled", false);
                     			}
                     		});
                 // alert(888)
