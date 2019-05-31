@@ -35,8 +35,8 @@
                     </div>
 
                     <div class="layui-card-header">
-                        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-                        <button class="layui-btn" onclick="xadmin.open('新增角色','/role/add')"><i class="layui-icon"></i>新增角色</button>
+                        <button class="layui-btn layui-btn-danger" onclick="delAll()" permission="sys:role:del"><i class="layui-icon"></i>批量删除</button>
+                        <button class="layui-btn" onclick="xadmin.open('新增角色','/role/add')" permission="sys:role:add"><i class="layui-icon"></i>新增角色</button>
                     </div>
 
                     <div class="layui-card-body ">
@@ -45,8 +45,8 @@
 
                     <div class="layui-card-body ">
                         <script type="text/html" id="barDemo">
-                            <a class="layui-btn layui-btn-xs" lay-event="edit" >编辑</a>
-                            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" >删除</a>
+                            <a class="layui-btn layui-btn-xs" lay-event="edit" permission="sys:role:edit">编辑</a>
+                            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" permission="sys:role:del">删除</a>
                         </script>
                     </div>
                 </div>
@@ -135,6 +135,7 @@
             });
             return false;
         });
+        checkPermission()
     });
 </script>
 </body>

@@ -21,7 +21,7 @@
 			<hr class="hr15">
 			<input id="password" name="password" placeholder="密码" type="password" autocomplete="off">
 			<hr class="hr15">
-            <button style="width: 100%;" type="submit" >登录</button>
+            <input style="width: 100%;" lay-submit lay-filter="login" type="submit" value="登录">
 			<!--<button style="width: 100%;" type="submit" onclick="login(this)">登录</button>-->
 			<hr class="hr20">
 			<span id="info" style="color: red"></span>
@@ -32,6 +32,55 @@
 
 </body>
 <script type="text/javascript">
+    $(function  () {
+        layui.use('form', function(){
+            var form = layui.form;
+            // layer.msg('玩命卖萌中', function(){
+            //   //关闭后的操作
+            //   });
+            //监听提交
+            form.on('submit(login)', function(data){
+                $.ajax({
+                    			type : 'post',
+                    			url : '/login',
+                    			data : $("#login-form").serialize(),
+                    			success : function(datas) {
+
+                                    if(datas.authenticated == true){
+                                        localStorage.setItem("userId", datas.principal.id);
+                                        localStorage.setItem("nickName", datas.principal.nickname);
+                                        var authorities = datas.authorities;
+                                        var permission = [];
+                                        for(var i in authorities){
+                                            permission.push(authorities[i].authority);
+										}
+                                        localStorage.setItem("permission", JSON.stringify(permission));
+                                        layer.msg("登录成功",function(){
+                                            location.href='/'
+                                        });
+									}else{
+                                        layer.msg("登录异常，请联系管理员");
+									}
+                    				//location.href = '/index.html';
+                    			},
+                    			error : function(xhr, textStatus, errorThrown) {
+                    				var msg = xhr.responseText;
+                    				var response = JSON.parse(msg);
+                    				if(response.message === "Bad credentials"){
+                                        layer.msg("账户或密码错误");
+									}else if(response.message === "用户名不存在"){
+                                        layer.msg("账户或密码错误");
+									}
+                    				//$("#info").html(response.message);
+                    				//$(obj).attr("disabled", false);
+                    			}
+                    		});
+                // alert(888)
+
+                return false;
+            });
+        });
+    })
 	// if (top != self) {
 	// 	parent.location.href = '/login.html';
 	// }

@@ -2,6 +2,7 @@ package com.sxbang.friday.security;
 
 import com.sxbang.friday.security.authentication.MyAuthenctiationFailureHandler;
 import com.sxbang.friday.security.authentication.MyAuthenticationSuccessHandler;
+import com.sxbang.friday.security.exception.RestAuthenticationAccessDeniedHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -48,11 +50,17 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.formLogin()
                 .loginPage("/login.html")
                 .loginProcessingUrl("/login")
-//                .successHandler(myAuthenticationSuccessHandler)
-//                .failureHandler(myAuthenctiationFailureHandler)
+                .successHandler(myAuthenticationSuccessHandler)
+                .failureHandler(myAuthenctiationFailureHandler)
         ;
-
+        //异常处理
+        httpSecurity.exceptionHandling().accessDeniedHandler(getAccessDeniedHandler());
     }
+    @Bean
+    public AccessDeniedHandler getAccessDeniedHandler() {
+        return new RestAuthenticationAccessDeniedHandler();
+    }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

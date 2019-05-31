@@ -85,7 +85,10 @@
                         }},
                         {title:'操作',toolbar:'#barDemo'}
                     ]
-                ]
+                ],
+                done:function(){
+                    checkPermission();
+                }
             });
         };
         renderTable();
@@ -128,7 +131,7 @@
                 xadmin.open('编辑用户信息', '/permission/edit/?id=' + data.id);
             }
         })
-
+        checkPermission()
     });
 </script>
 </body>
