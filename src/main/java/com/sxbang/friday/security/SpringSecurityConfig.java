@@ -1,5 +1,6 @@
 package com.sxbang.friday.security;
 
+import com.sxbang.friday.dto.LoginUser;
 import com.sxbang.friday.security.authentication.MyAuthenctiationFailureHandler;
 import com.sxbang.friday.security.authentication.MyAuthenticationSuccessHandler;
 import com.sxbang.friday.security.exception.RestAuthenticationAccessDeniedHandler;
@@ -9,10 +10,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -52,6 +60,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/login")
                 .successHandler(myAuthenticationSuccessHandler)
                 .failureHandler(myAuthenctiationFailureHandler)
+        .and().logout().permitAll().invalidateHttpSession(true).
+                deleteCookies("JSESSIONID").logoutSuccessHandler(logoutSuccessHandler())
         ;
         //异常处理
         httpSecurity.exceptionHandling().accessDeniedHandler(getAccessDeniedHandler());
@@ -70,5 +80,20 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    public LogoutSuccessHandler logoutSuccessHandler() { //登出处理
+        return new LogoutSuccessHandler() {
+            @Override
+            public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+                try {
+                    LoginUser user = (LoginUser) authentication.getPrincipal();
+
+                } catch (Exception e) {
+                }
+                httpServletResponse.sendRedirect("/login");
+            }
+        };
     }
 }
