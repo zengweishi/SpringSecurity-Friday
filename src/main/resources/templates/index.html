@@ -185,7 +185,7 @@
                             if (item.parentId == 0) {
                                 isRoot = true;
                             }
-                            var menuItemStr = item.type === 1 ? _this.menuParentTemplate:_this.menuItemTemplate;
+                            var menuItemStr = item.child.length >0 ? _this.menuParentTemplate:_this.menuItemTemplate;
                             menuItemStr = menuItemStr.replace(/{{menu_name}}/, item.name);
                             if (isRoot) {
                                 menuItemStr = menuItemStr.replace(/{{menu_right}}/, _this.menuItemRight);
