@@ -43,7 +43,7 @@
                         <dd>
                             <a onclick="xadmin.open('切换帐号','http://www.baidu.com')">切换帐号</a></dd>
                         <dd>
-                            <a href="./login.html">退出</a></dd>
+                            <a href="/logout">退出</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item to-index">
@@ -106,6 +106,16 @@
                         +'<li>'
                         //+ '	<a {{menu_level}}href="{{menu_href}}">'
                         + '<a onclick="xadmin.add_tab(\'{{menu_title}} \',\' {{menu_href}} \')">'
+                        + '		<i class="iconfont">{{men_icon}}</i>'
+                        + '		<cite>{{menu_name}}</cite>'
+                        + '		{{menu_right}}'
+                        + '	</a>'
+                        + '	{{sub_menu}}'
+                        +'</li>';
+                    this.menuParentTemplate = ""
+                        +'<li>'
+                        //+ '	<a {{menu_level}}href="{{menu_href}}">'
+                        + '<a >'
                         + '		<i class="iconfont">{{men_icon}}</i>'
                         + '		<cite>{{menu_name}}</cite>'
                         + '		{{menu_right}}'
@@ -175,7 +185,7 @@
                             if (item.parentId == 0) {
                                 isRoot = true;
                             }
-                            var menuItemStr = _this.menuItemTemplate;
+                            var menuItemStr = item.type === 1 ? _this.menuParentTemplate:_this.menuItemTemplate;
                             menuItemStr = menuItemStr.replace(/{{menu_name}}/, item.name);
                             if (isRoot) {
                                 menuItemStr = menuItemStr.replace(/{{menu_right}}/, _this.menuItemRight);
