@@ -66,11 +66,8 @@
                     			error : function(xhr, textStatus, errorThrown) {
                     				var msg = xhr.responseText;
                     				var response = JSON.parse(msg);
-                    				if(response.message === "Bad credentials"){
-                                        layer.msg("账户或密码错误");
-									}else if(response.message === "用户名不存在"){
-                                        layer.msg("账户或密码错误");
-									}
+                                    layer.msg(response.message);
+                    				
                     				//$("#info").html(response.message);
                     				//$(obj).attr("disabled", false);
                     			}
