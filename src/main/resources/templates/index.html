@@ -104,7 +104,6 @@
                     this.menuItemRight = '<i class="iconfont nav_right">&#xe697;</i>';
                     this.menuItemTemplate = ""
                         +'<li>'
-                        //+ '	<a {{menu_level}}href="{{menu_href}}">'
                         + '<a onclick="xadmin.add_tab(\'{{menu_title}} \',\' {{menu_href}} \')">'
                         + '		<i class="iconfont">{{men_icon}}</i>'
                         + '		<cite>{{menu_name}}</cite>'
@@ -114,7 +113,6 @@
                         +'</li>';
                     this.menuParentTemplate = ""
                         +'<li>'
-                        //+ '	<a {{menu_level}}href="{{menu_href}}">'
                         + '<a >'
                         + '		<i class="iconfont">{{men_icon}}</i>'
                         + '		<cite>{{menu_name}}</cite>'
@@ -136,7 +134,6 @@
                             var htmlStr = _this.generateMenu('',_this.permission);
                             $("#" + eleId).html(htmlStr);
                         });
-                        //_this.menuListen();
                     },
                     getMenuData: function (userId) {
                         var _this = this;
@@ -214,103 +211,9 @@
                             htmlStr += menuItemStr;
                         });
                         return htmlStr;
-                    },
-                    menuListen: function() {
-
-                        alert(11)
-                        $('.left-nav #nav').unbind();
-                        $('.left-nav #nav').on('click', 'li', function(event) {
-                            var index = $('.left-nav #nav li').index($(this));
-
-                            if($(this).children('.sub-menu').length){
-                                if($(this).hasClass('open')){
-
-                                    if($(this).parent().hasClass('sub-menu')){
-                                        deleteCookie('left_menu_son');
-                                    }else{
-                                        deleteCookie('left_menu_father');
-                                    }
-
-                                    $(this).removeClass('open');
-                                    $(this).find('.nav_right').html('&#xe697;');
-                                    $(this).children('.sub-menu').stop().slideUp();
-                                    $(this).siblings().children('.sub-menu').slideUp();
-                                }else{
-
-
-                                    if($(this).parent().hasClass('sub-menu')){
-                                        setCookie('left_menu_son',index);
-                                    }else{
-                                        setCookie('left_menu_father',index);
-                                    }
-
-                                    $(this).addClass('open');
-                                    $(this).children('a').find('.nav_right').html('&#xe6a6;');
-                                    $(this).children('.sub-menu').stop().slideDown();
-                                    $(this).siblings().children('.sub-menu').stop().slideUp();
-                                    $(this).siblings().find('.nav_right').html('&#xe697;');
-                                    $(this).siblings().removeClass('open');
-                                }
-                            }else{
-
-                                var url = $(this).children('a').attr('_href');
-                                var title = $(this).find('cite').html();
-                                // var index  = $('.left-nav #nav li').index($(this));
-
-                                var is_refresh = $(this).attr('date-refresh')?true:false;
-
-                                for (var i = 0; i <$('.x-iframe').length; i++) {
-                                    if($('.x-iframe').eq(i).attr('tab-id')==index+1){
-                                        tab.tabChange(index+1);
-                                        event.stopPropagation();
-
-
-                                        if(is_refresh)
-                                            $('.x-iframe').eq(i).attr("src",$('.x-iframe').eq(i).attr('src'));
-
-                                        return;
-                                    }
-                                };
-
-                                if(getCookie('tab_list')){
-                                    tab_list = getCookie('tab_list').split(',');
-                                }else{
-                                    tab_list = [];
-                                }
-
-                                var is_exist = false;
-
-                                for (var i in tab_list) {
-                                    if(tab_list[i]==index)
-                                        is_exist = true;
-                                }
-
-                                if(!is_exist){
-                                    tab_list.push(index);
-                                }
-
-                                setCookie('tab_list',tab_list);
-
-                                tab.tabAdd(title,url,index+1);
-                                tab.tabChange(index+1);
-                            }
-
-                            event.stopPropagation();
-
-                        })
-
-                        // 左侧菜单记忆功能
-                        if(getCookie('left_menu_father')!=null){
-                            $('.left-nav #nav li').eq(getCookie('left_menu_father')).click();
-                        }
-
-                        if(getCookie('left_menu_son')!=null){
-                            $('.left-nav #nav li').eq(getCookie('left_menu_son')).click();
-                        }
                     }
 
                 }
-                //var userId = JSON.parse(localStorage.user).id;
                 var userId = localStorage.userId;
                 var menu = new Menu("",userId );
                 menu.init();

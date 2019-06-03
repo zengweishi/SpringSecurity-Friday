@@ -41,6 +41,7 @@ public class RoleController {
 	}
 
     @GetMapping(value = "/add")
+    @PreAuthorize("hasAuthority('sys:role:add')")
     public String addRole(Model model) {
         model.addAttribute("sysRole",new SysRole());
         return "role/role-add";

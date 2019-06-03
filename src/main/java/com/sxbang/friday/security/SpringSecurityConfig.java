@@ -1,9 +1,9 @@
 package com.sxbang.friday.security;
 
-import com.sxbang.friday.dto.LoginUser;
 import com.sxbang.friday.security.authentication.MyAuthenctiationFailureHandler;
 import com.sxbang.friday.security.authentication.MyAuthenticationSuccessHandler;
-import com.sxbang.friday.security.exception.RestAuthenticationAccessDeniedHandler;
+import com.sxbang.friday.security.authentication.MyLogoutSuccessHandler;
+import com.sxbang.friday.security.authentication.RestAuthenticationAccessDeniedHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +14,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import javax.servlet.ServletException;
@@ -34,13 +33,15 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private MyAuthenctiationFailureHandler myAuthenctiationFailureHandler;
 
+    @Autowired
+    private RestAuthenticationAccessDeniedHandler restAuthenticationAccessDeniedHandler;
+
+    @Autowired
+    private MyLogoutSuccessHandler myLogoutSuccessHandler;
+
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable();
-
-        // 基于token，所以不需要session
-        //httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
         httpSecurity.authorizeRequests()
                 .antMatchers("/login.html",
                         "/my/**",
@@ -61,16 +62,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(myAuthenticationSuccessHandler)
                 .failureHandler(myAuthenctiationFailureHandler)
         .and().logout().permitAll().invalidateHttpSession(true).
-                deleteCookies("JSESSIONID").logoutSuccessHandler(logoutSuccessHandler())
+                deleteCookies("JSESSIONID").logoutSuccessHandler(myLogoutSuccessHandler)
         ;
         //异常处理
-        httpSecurity.exceptionHandling().accessDeniedHandler(getAccessDeniedHandler());
+        httpSecurity.exceptionHandling().accessDeniedHandler(restAuthenticationAccessDeniedHandler);
     }
-    @Bean
-    public AccessDeniedHandler getAccessDeniedHandler() {
-        return new RestAuthenticationAccessDeniedHandler();
-    }
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -82,18 +78,4 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
-    @Bean
-    public LogoutSuccessHandler logoutSuccessHandler() { //登出处理
-        return new LogoutSuccessHandler() {
-            @Override
-            public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-                try {
-                    LoginUser user = (LoginUser) authentication.getPrincipal();
-
-                } catch (Exception e) {
-                }
-                httpServletResponse.sendRedirect("/login");
-            }
-        };
-    }
 }

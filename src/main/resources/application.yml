@@ -43,7 +43,3 @@ api-url: /api
 
 server:
   port: 8080
-
-security:
-
-  frame-options
