@@ -40,6 +40,7 @@
 
 						if(datas.authenticated == true){
 							localStorage.setItem("userId", datas.principal.id);
+                            localStorage.setItem("username", datas.principal.username);
 							localStorage.setItem("nickName", datas.principal.nickname);
 							var authorities = datas.authorities;
 							var permission = [];
