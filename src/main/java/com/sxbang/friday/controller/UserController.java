@@ -140,4 +140,11 @@ public class UserController {
 		requests.countOffset();
 		return userService.getUserByFuzzyUserNamePage(username,requests.getOffset(),requests.getLimit());
 	}
+
+    @PostMapping("/changePassword")
+    @ApiOperation(value = "修改密码")
+    @ResponseBody
+    public Results<SysUser> changePassword(String username, String oldPassword, String newPassword) {
+        return userService.changePassword(username, oldPassword, newPassword);
+    }
 }

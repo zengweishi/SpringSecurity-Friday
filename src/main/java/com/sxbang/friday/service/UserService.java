@@ -23,4 +23,6 @@ public interface UserService {
 
     Results<SysUser> getUserByFuzzyUserNamePage(String username, Integer startPosition, Integer limit);
 
+    Results changePassword(String username, String oldPassword, String newPassword);
+
 }
