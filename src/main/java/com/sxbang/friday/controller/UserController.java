@@ -140,6 +140,4 @@ public class UserController {
 		requests.countOffset();
 		return userService.getUserByFuzzyUserNamePage(username,requests.getOffset(),requests.getLimit());
 	}
-
-
 }
