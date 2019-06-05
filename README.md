@@ -38,7 +38,7 @@ Swagger接口文档功能；
 
 1. 使用Intelij IDEA导入项目代码；
 2. 将'/resources'目录下的'friday.sql'导入MySQL数据库；
-3. 修改'/resources'目录下的'application.yml'文件中的数据源配置:
+3. 修改'/resources'目录下的'application.yml'文件中的数据源配置，改为你自己的MySQL环境:
 
 ```
 url: jdbc:mysql://localhost:12345/sxb-base?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
