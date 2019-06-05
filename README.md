@@ -47,5 +47,5 @@ password: my-secret-pw
 
 1. 本项目配有成套开发视频供参考 [http://www.sxbang.net/projects/128](http://www.sxbang.net/projects/128)
 
-#### 如有帮助，请随手点击右上角的star,以资鼓励，我们会持续更新。
+#### 如有帮助，请随手点击右上角的star，非常感谢。
 
