@@ -29,7 +29,7 @@
 
 #### 安装教程
 
-1. 使用Intelij IDEA导入项目代码；
+1. 克隆源代码并使用Intelij IDEA导入项目代码；
 2. 将'/resources'目录下的'friday.sql'导入MySQL数据库；
 3. 修改'/resources'目录下的'application.yml'文件中的数据源配置，改为你自己的MySQL环境:
 
