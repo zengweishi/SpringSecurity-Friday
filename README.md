@@ -34,7 +34,7 @@
 3. 修改'/resources'目录下的'application.yml'文件中的数据源配置，改为你自己的MySQL环境:
 
 ```
-url: jdbc:mysql://localhost:12345/sxb-base?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+url: jdbc:mysql://localhost:3306/sxb-base?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
 
 username: root
 
