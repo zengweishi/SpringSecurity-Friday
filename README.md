@@ -14,6 +14,8 @@
 8. X-admin 2.2
 9. Thymeleaf 3.0.11
 10. Layui 2.5.3
+11. MySQL 5.6
+12. Docker(用于提供MySQL服务) 
 
 #### 内置功能
 用户管理：用户查询、添加用户、修改用户、用户角色设置、删除用户；
@@ -27,9 +29,15 @@ Swagger接口文档功能；
 
 #### 安装教程
 
-1. xxxx
-2. xxxx
-3. xxxx
+1. 使用Intelij IDEA导入项目代码；
+2. 将'/resources'目录下的'friday.sql'导入MySQL数据库；
+3. 修改'/resources'目录下的'application.yml'文件中的数据源配置:
+“
+url: jdbc:mysql://localhost:12345/sxb-base?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+username: root
+password: my-secret-pw
+”
+4. 启动项目，访问"http://localhost:8080",输入admin/admin即可登陆成功。
 
 #### 使用说明
 
