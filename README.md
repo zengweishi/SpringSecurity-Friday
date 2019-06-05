@@ -39,15 +39,15 @@ Swagger接口文档功能；
 1. 使用Intelij IDEA导入项目代码；
 2. 将'/resources'目录下的'friday.sql'导入MySQL数据库；
 3. 修改'/resources'目录下的'application.yml'文件中的数据源配置:
-“
 
+```
 url: jdbc:mysql://localhost:12345/sxb-base?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
 
 username: root
 
 password: my-secret-pw
+```
 
-”
 4. 启动项目，访问"http://localhost:8080",输入admin/admin即可登陆成功。
 
 #### 使用说明
