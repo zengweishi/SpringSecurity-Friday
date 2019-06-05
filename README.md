@@ -45,4 +45,4 @@ password: my-secret-pw
 
 #### 项目学习
 
-1. 本项目配有成套开发视频供参考 [http://www.sxbang.net](http://www.sxbang.net)
+1. 本项目配有成套开发视频供参考 [www.sxbang.net/projects/128](www.sxbang.net/projects/128)
