@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
@@ -56,6 +57,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 ;
         //解决X-Frame-Options DENY问题
         httpSecurity.headers().frameOptions().sameOrigin();
+
+        //请求被拦截到login.html进行登录，然后请求login方法
         httpSecurity.formLogin()
                 .loginPage("/login.html")
                 .loginProcessingUrl("/login")

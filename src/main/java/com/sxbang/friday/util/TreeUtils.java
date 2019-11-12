@@ -25,6 +25,10 @@ public class TreeUtils {
                     parent.put("child", child);
                     setPermissionsTree(per.getId(), permissionsAll, child);
                 }
+                /**[{"":""...child:[{child1},{child2}...{childn}]},
+                 *  {"":""...child:[{child1},{child2}...{childn}]}]
+                 */
+
             }
         }
     }

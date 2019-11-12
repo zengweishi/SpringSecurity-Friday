@@ -47,6 +47,7 @@ public class RoleServiceImpl implements RoleService {
         List<Long> permissionIds = roleDto.getPermissionIds();
         //移除0,permission id是从1开始
         permissionIds.remove(0L);
+
         //2、保存角色对应的所有权限
         if (!CollectionUtils.isEmpty(permissionIds)) {
             rolePermissionDao.save(roleDto.getId(), permissionIds);

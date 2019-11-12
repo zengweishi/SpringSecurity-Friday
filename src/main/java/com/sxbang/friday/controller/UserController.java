@@ -94,6 +94,7 @@ public class UserController {
     @ApiOperation(value = "用户编辑页面", notes = "跳转到用户信息编辑页面")//描述
     @ApiImplicitParam(name = "user", value = "用户实体类", dataType = "SysUser")
     public String editUser(Model model, SysUser user) {
+		System.out.println(userService.getUserById(user.getId()).toString());
         model.addAttribute("sysUser",userService.getUserById(user.getId()));
         return "user/user-edit";
     }

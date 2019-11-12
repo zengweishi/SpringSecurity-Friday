@@ -63,6 +63,7 @@ public class RoleController {
     @ApiOperation(value = "保存角色信息", notes = "保存新增的角色信息")//描述
     @ApiImplicitParam(name = "roleDto",value = "角色信息实体类", required = true,dataType = "RoleDto")
     public Results saveRole(@RequestBody RoleDto roleDto) {
+        System.out.println(roleDto.getPermissionIds());
         return roleService.save(roleDto);
     }
 

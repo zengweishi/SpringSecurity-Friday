@@ -11,6 +11,7 @@ public interface PermissionDao {
     @Select("select * from sys_permission t")
     List<SysPermission> findAll();
 
+    //select p.* from sys_permission p where p.id in (select permissionId from sys_role_permission where roleId = #{roleId}) order by p.sort
     @Select("select p.* from sys_permission p inner join sys_role_permission rp on p.id = rp.permissionId where rp.roleId = #{roleId} order by p.sort")
     List<SysPermission> listByRoleId(Integer roleId);
 
@@ -36,4 +37,10 @@ public interface PermissionDao {
             "WHERE " +
             "sru.userId = #{userId}")
     List<SysPermission> listByUserId(@Param("userId") Long userId);
+    /**
+     * sru表            | srp表                    |  sp表
+     * uId     roleId  |  roleId    permissionId  |  permissionId  ......
+     * (已知)  -----------------    ------------------------------
+     * 连接查询
+     */
 }
